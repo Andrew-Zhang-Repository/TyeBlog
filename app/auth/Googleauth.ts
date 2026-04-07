@@ -1,12 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { createClient } from './Createclient';
 
 export async function signInWithGoogle() {
+  const supabase = await createClient();
   return supabase.auth.signInWithOAuth({
-    provider: 'google'
+    provider: 'google',
+    options:{
+      redirectTo: 'http://localhost:3000/auth/callback'
+    }
   });
 }
