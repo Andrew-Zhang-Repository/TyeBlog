@@ -1,17 +1,57 @@
-import React from 'react';
-import Link from 'next/link';
+'use client';
+import { PrismaClient } from '../../generated/prisma/client';
+import { createClient } from '../auth/Createclient';
+import { redirect } from 'next/navigation';
+import Signoutbutton from './Signoutbutton';
 
 
 
-// The root layout defined in app/layout.tsx will wrap this component.
-// You can learn more about layouts in the [Next.js documentation](https://nextjs.org/docs/app/getting-started/layouts-and-pages).
-
-export default function Home() {
-
+export default function Dashboard() {
+  
+ 
   
   return (
-      <p>HELLO FELLA </p>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-white rounded-lg shadow p-6">
+          <div className="flex items-center gap-4">
+            {/*
+            {dbUser?.image ? (
+              <img 
+                src={dbUser.image} 
+                alt={dbUser.name || 'User'} 
+                className="w-16 h-16 rounded-full"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center">
+                <span className="text-2xl text-indigo-600">
+                  {dbUser?.name?.charAt(0) || user.email?.charAt(0)}
+                </span>
+              </div>
+            )}
+        */}
+            {/*
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                {dbUser?.name || 'Welcome!'}
+              </h1>
+              <p className="text-gray-500">{user.email}</p>
+            </div>
+            */}
+
+          </div>
+          <div className="mt-6 flex gap-4">
+            <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+              Create Post
+            </button>
+            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+              View Posts
+            </button>
+            <Signoutbutton />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
-
 
