@@ -1,3 +1,4 @@
+'use client'
 import {createClient} from "../auth/Createclient"
 import {redirect} from 'next/navigation'
 

@@ -1,12 +1,32 @@
-'use client';
+
 import { PrismaClient } from '../../generated/prisma/client';
-import { createClient } from '../auth/Createclient';
-import { redirect } from 'next/navigation';
+import { createServerClient } from '../auth/Createserver';
 import Signoutbutton from './Signoutbutton';
+import { Pool } from "pg";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { redirect } from 'next/navigation';
 
 
 
-export default function Dashboard() {
+
+export default async function Dashboard() {
+    const connectionString = process.env.DIRECT_URL
+    const pool = new Pool({ connectionString });
+    const adapter = new PrismaPg(pool);
+    const prisma = new PrismaClient({adapter})
+
+    const supabase = await createServerClient()
+    const { data:{user} } = await supabase.auth.getUser()
+
+    if (!user){
+        redirect("http://localhost:3000");
+    }
+
+    const dbUser = await prisma.user.findUnique({
+        where: { email: user.email! },
+    });
+   
+  
   
  
   
@@ -15,7 +35,7 @@ export default function Dashboard() {
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center gap-4">
-            {/*
+            
             {dbUser?.image ? (
               <img 
                 src={dbUser.image} 
@@ -29,15 +49,15 @@ export default function Dashboard() {
                 </span>
               </div>
             )}
-        */}
-            {/*
+        
+            
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
                 {dbUser?.name || 'Welcome!'}
               </h1>
               <p className="text-gray-500">{user.email}</p>
             </div>
-            */}
+            
 
           </div>
           <div className="mt-6 flex gap-4">
